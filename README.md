@@ -22,7 +22,7 @@ Install the dependencies and devDependencies and start the server.
 2- create super user account to handle users and products
 3- add products
     note : only stuff and sellers users can add products
-4- add products to card through creating card item
+4- add products to cart through creating cart item
 5- Make order by passing the items you added and your adderss
 6- wait for the delivery man
 ```
