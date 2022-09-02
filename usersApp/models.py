@@ -2,7 +2,7 @@ from pickle import TRUE
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from productApp.models import Card
+from productApp.models import Cart
 from rest_framework.response import Response
 
 class UserManager(BaseUserManager):
@@ -32,7 +32,7 @@ class User(AbstractUser):
     last_name = models.CharField(verbose_name = 'Last name', max_length=150, blank=True)
     email = models.EmailField(verbose_name="Email address" , blank=False, unique=True, null=False)
     is_active = models.BooleanField(default=False)
-    card = models.ForeignKey(Card, on_delete=models.CASCADE, blank=True, null=True ,verbose_name='Card')
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, blank=True, null=True ,verbose_name='cart')
     is_seller = models.BooleanField(default=False)
     objects = UserManager()
 

@@ -8,33 +8,33 @@ class AddNewProduct(permissions.BasePermission):
         except Exception as e:
             return False
 
-class createCardItemPermission(permissions.BasePermission):
+class createcartItemPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         try:
-            if(request.user.card):
+            if(request.user.cart):
                 return (True)
         except Exception as e:
             return False
 
     def has_object_permission(self, request, view, obj):
         try:
-            cardOwner = User.objects.get(card=obj.card)
-            return (cardOwner == request.user)
+            cartOwner = User.objects.get(cart=obj.cart)
+            return (cartOwner == request.user)
         except Exception as e:
             return False
 
 
-class getCardPermission(permissions.BasePermission):
+class getcartPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         try:
-            if(request.user.card):
+            if(request.user.cart):
                 return (True)
         except Exception as e:
             return False
             
     def has_object_permission(self, request, view, obj):
         try:
-            cardOwner = User.objects.get(card=obj.card)
-            return (cardOwner == request.user)
+            cartOwner = User.objects.get(cart=obj.cart)
+            return (cartOwner == request.user)
         except Exception as e:
             return False

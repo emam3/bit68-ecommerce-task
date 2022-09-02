@@ -8,10 +8,10 @@ class productSerializer(serializers.ModelSerializer):
         fields = ('uuid','title','price', 'seller')
 
 
-class cardItemSerializer(serializers.ModelSerializer):
+class cartItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.cardItem
-        fields =['product', 'quantity', 'card']
+        model = models.cartItem
+        fields =['product', 'quantity', 'cart']
 
 
 class orderSerializer(serializers.ModelSerializer):
@@ -19,8 +19,8 @@ class orderSerializer(serializers.ModelSerializer):
         model = models.checkOut
         fields = ['items', 'address']
 
-class cardSerializer(serializers.ModelSerializer):
+class cartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Card
+        model = models.Cart
         fields=('uuid','items',)
 

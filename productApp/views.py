@@ -9,9 +9,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 
 from productApp import serializers
-from productApp.models import Card, Product, cardItem, checkOut
+from productApp.models import Cart, Product, cartItem, checkOut
 from rest_framework.authentication import TokenAuthentication
-from productApp.permissions import AddNewProduct, createCardItemPermission, getCardPermission
+from productApp.permissions import AddNewProduct, createcartItemPermission, getcartPermission
 
 # Create your views here.
 
@@ -63,26 +63,26 @@ class getAllProducts(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title',)
 
-class getCard(viewsets.ModelViewSet):
+class getcart(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (getCardPermission,)
-    serializer_class = serializers.cardSerializer
-    queryset = Card.objects.all()
+    permission_classes = (getcartPermission,)
+    serializer_class = serializers.cartSerializer
+    queryset = Cart.objects.all()
     def get_queryset(self):
-        self.queryset = self.request.user.card
+        self.queryset = self.request.user.cart
         return [self.queryset]
 
-class createCardItemView(viewsets.ModelViewSet):
-    serializer_class = serializers.cardItemSerializer
+class createcartItemView(viewsets.ModelViewSet):
+    serializer_class = serializers.cartItemSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (createCardItemPermission,)
-    queryset = cardItem.objects.all()
+    permission_classes = (createcartItemPermission,)
+    queryset = cartItem.objects.all()
 
     def get_queryset(self):
         queryset = self.queryset
-        card = self.request.user.card
+        cart = self.request.user.cart
         is_staff = self.request.user.is_staff
-        queryset = queryset.filter(card=card) if not is_staff else queryset
+        queryset = queryset.filter(cart=cart) if not is_staff else queryset
 
         return queryset
 
@@ -90,19 +90,19 @@ class createCardItemView(viewsets.ModelViewSet):
         try:
             serializer = self.serializer_class(data=request.data)
             serializer.is_valid(raise_exception=True)
-            if serializer.validated_data['card'] != request.user.card:
+            if serializer.validated_data['cart'] != request.user.cart:
                 return Response({
                     "apiStatus" : False,
                     "Reason": "you're not allowed to"
                 })
-            item = cardItem.objects.create(
+            item = cartItem.objects.create(
                 product = serializer.validated_data['product'],
                 quantity = serializer.validated_data['quantity'],
-                card = serializer.validated_data['card']
+                cart = serializer.validated_data['cart']
             )
             item.save()
-            card = request.user.card
-            card.items.add(item)
+            cart = request.user.cart
+            cart.items.add(item)
             return Response({
                 'item_uuid' : item.uuid,
                 'item_product': item.product.title,
@@ -122,14 +122,14 @@ class createOrderView(viewsets.ModelViewSet):
     queryset = checkOut.objects.all()
     total_price = 0
     def create(self,request):
-        """Before creating the checkout we have to check whether the items are in the request.user.card or not"""
+        """Before creating the checkout we have to check whether the items are in the request.user.cart or not"""
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         items = serializer.validated_data['items']
-        user_card = request.user.card
+        user_cart = request.user.cart
         for item in items:
             self.total_price += item.itemPrice 
-            if item.card != user_card:
+            if item.cart != user_cart:
                 return Response({
                     'Error' : "You're not allowed to perform this action"
                 })
@@ -140,7 +140,7 @@ class createOrderView(viewsets.ModelViewSet):
         )
         checkout.items.set(items)
 
-        user_card.items.remove(*items)
+        user_cart.items.remove(*items)
         return Response({
             "checkout_uuid" : checkout.uuid,
             "checkout_price" : checkout.totalPrice,

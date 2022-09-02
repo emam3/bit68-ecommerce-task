@@ -1,19 +1,19 @@
 from django.contrib import admin
-from productApp.models import Product, cardItem, Card, checkOut
+from productApp.models import Product, cartItem, Cart, checkOut
 
 
 class productAdmin(admin.ModelAdmin):
     list_display = ["uuid", "title", "price"]
 
-class cardItemAdmin(admin.ModelAdmin):
+class cartItemAdmin(admin.ModelAdmin):
     list_display = ["uuid", "product", "quantity", "itemPrice"]
 
-class CardAdmin(admin.ModelAdmin):
+class cartAdmin(admin.ModelAdmin):
     list_display = ["uuid", "get_items"]
 
     def get_items(self,obj):
         try:
-            return "\n".join([card.items for card in Card.objects.all()])
+            return "\n".join([cart.items for cart in Cart.objects.all()])
         except Exception as e:
             return []
 
@@ -21,8 +21,8 @@ class checkOutAdmin(admin.ModelAdmin):
     list_display = ["uuid"]
 
 admin.site.register(Product, productAdmin)
-admin.site.register(cardItem, cardItemAdmin)
-admin.site.register(Card, CardAdmin)
+admin.site.register(cartItem, cartItemAdmin)
+admin.site.register(Cart, cartAdmin)
 admin.site.register(checkOut, checkOutAdmin)
 
 # Register your models here.

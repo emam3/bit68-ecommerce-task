@@ -1,14 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from productApp.views import createProductView, createCardItemView,createOrderView,getAllProducts, getCard, getUserOrders
+from productApp.views import createProductView, createcartItemView,createOrderView,getAllProducts, getcart, getUserOrders
 
 
 router = DefaultRouter()
 router.register('createProductView' , createProductView)
-router.register('createCardItemView' , createCardItemView)
+router.register('createCartItemView' , createcartItemView)
 router.register('createOrderView' , createOrderView)
 router.register('getAllProducts' , getAllProducts)
-router.register('getCard' , getCard)
+router.register('getCart' , getcart)
 router.register('getUserOrders' , getUserOrders)
 
 urlpatterns = [

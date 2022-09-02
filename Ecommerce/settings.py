@@ -58,9 +58,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': (
-        'productApp.permissions.createCardItemPermission', 
-    )
 }
 
 ROOT_URLCONF = 'Ecommerce.urls'
