@@ -3,9 +3,13 @@
 ## Features
 
 -- user can add product to card
+
 -- user can quantity of the product he want
+
 -- user make the checkout and then he gets the final price
+
 -- you can search by prodcut name and products are ordered from low to high bu price
+
 -- PSQL is used to handle our DB
 
 
