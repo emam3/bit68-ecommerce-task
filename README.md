@@ -8,7 +8,7 @@
 
 -- user make the checkout and then he gets the final price
 
--- you can search by prodcut name and products are ordered from low to high bu price
+-- you can search by prodcut name and products are ordered from low to high by price
 
 -- PSQL is used to handle our DB
 
