@@ -2,9 +2,9 @@
 
 ## Features
 
--- user can add product to card
+-- user can add product to cart
 
--- user can quantity of the product he want
+-- user can add the quantity of the product he want
 
 -- user make the checkout and then he gets the final price
 
